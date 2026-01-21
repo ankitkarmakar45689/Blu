@@ -21,16 +21,18 @@ export function ReadingProvider({ children }) {
 
     // Apply CSS Variables globally
     useEffect(() => {
+        console.log('Applying settings:', settings); // Debug log
+
         const root = document.documentElement;
         root.style.setProperty('--filter-brightness', settings.brightness / 100);
         root.style.setProperty('--filter-sepia', settings.sepia / 100);
-
-        // For Blue Light, we might manipulate a body::after opacity or color
-        // See globals.css body::after
-        // We can use a CSS variable for the overlay color/opacity
-        // But body::after isn't easily accessible via variable unless defined there.
-        // Let's set a variable --blue-light-opacity
         root.style.setProperty('--blue-light-opacity', settings.blueLight / 100);
+
+        console.log('CSS Variables set:', {
+            brightness: settings.brightness / 100,
+            sepia: settings.sepia / 100,
+            blueLight: settings.blueLight / 100
+        });
 
         // Theme logic
         if (settings.theme === 'light') {
