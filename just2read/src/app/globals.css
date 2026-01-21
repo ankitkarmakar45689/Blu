@@ -1,0 +1,102 @@
+:root {
+  /* Core Colors */
+  --bg-primary: #0f0f13;
+  /* Deep space black/gray */
+  --bg-secondary: #1a1a24;
+  /* Slightly lighter for contrasts */
+  --accent-primary: #00f0ff;
+  /* Neon Cyan */
+  --accent-secondary: #7000ff;
+  /* Neon Purple */
+  --accent-warm: #ffaa00;
+  /* Warm reading light */
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.4);
+
+  /* Glassmorphism Tokens */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-blur: 20px;
+
+  /* Reading Modes (Variables to be overridden by JS) */
+  --filter-sepia: 0;
+  --filter-brightness: 1;
+  --filter-contrast: 1;
+  --filter-grayscale: 0;
+  --filter-hue-rotate: 0deg;
+  --blue-light-opacity: 0;
+
+  /* Layout */
+  --header-height: 80px;
+  --max-width: 1200px;
+}
+
+/* Apply filters to main content */
+.main-content {
+  filter: brightness(var(--filter-brightness)) sepia(var(--filter-sepia)) contrast(var(--filter-contrast));
+  transition: filter 0.3s ease;
+}
+
+/* Reset & Base */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Utility Classes for Glass */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 16px;
+}
+
+/* Eye Care Overlay - Blue Light Filter */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  background: rgba(255, 150, 50, var(--blue-light-opacity));
+  transition: background 0.5s ease;
+}
