@@ -75,8 +75,18 @@ export default function Home() {
       background: 'radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0f0f13 100%)'
     }}>
 
-      {/* Hero Section */}
-      <div style={{ textAlign: 'center', marginBottom: '3rem', zIndex: 10 }}>
+      {/* Hero Section - Glass Navbar */}
+      <GlassSurface
+        intensity="high"
+        style={{
+          textAlign: 'center',
+          marginBottom: '3rem',
+          zIndex: 10,
+          padding: '2rem 3rem',
+          maxWidth: '800px',
+          width: '100%'
+        }}
+      >
         <h1 style={{
           fontSize: '4rem',
           fontWeight: '900',
@@ -91,7 +101,7 @@ export default function Home() {
         <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
           The future of healthy digital reading. Distraction-free, eye-caring, and beautifully designed.
         </p>
-      </div>
+      </GlassSurface>
 
       {/* Upload & Action Area */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', width: '100%', maxWidth: '900px' }}>

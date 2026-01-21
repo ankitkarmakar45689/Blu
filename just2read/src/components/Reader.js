@@ -32,7 +32,8 @@ export default function Reader() {
         minHeight: '100vh',
         fontFamily: settings.theme === 'paper' ? 'Georgia, serif' : 'inherit',
         color: 'var(--text-primary)',
-        fontSize: `${settings.fontSize}px`,
+        transform: `scale(${settings.pageZoom / 100})`,
+        transformOrigin: 'top center',
         lineHeight: settings.lineHeight,
     };
 

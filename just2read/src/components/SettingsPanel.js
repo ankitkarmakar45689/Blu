@@ -2,7 +2,7 @@
 import React from 'react';
 import GlassSurface from './GlassSurface';
 import { useReading } from '@/context/ReadingContext';
-import { X, Sun, Eye, Type, Droplet } from 'lucide-react';
+import { X, Sun, Eye, ZoomIn, Droplet } from 'lucide-react';
 
 export default function SettingsPanel() {
     const { settings, setSettings, showSettings, setShowSettings } = useReading();
@@ -153,23 +153,23 @@ export default function SettingsPanel() {
                     />
                 </div>
 
-                {/* Font Size */}
+                {/* Page Zoom */}
                 <div className="setting-group">
                     <label style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                        <Type size={16} /> Text Size ({settings.fontSize}px)
+                        <ZoomIn size={16} /> Page Zoom ({settings.pageZoom}%)
                     </label>
                     <input
                         type="range"
-                        min="12"
-                        max="32"
-                        value={settings.fontSize}
+                        min="50"
+                        max="150"
+                        value={settings.pageZoom}
                         onChange={(e) => {
                             e.stopPropagation();
-                            handleChange('fontSize', Number(e.target.value));
+                            handleChange('pageZoom', Number(e.target.value));
                         }}
                         onInput={(e) => {
                             e.stopPropagation();
-                            handleChange('fontSize', Number(e.target.value));
+                            handleChange('pageZoom', Number(e.target.value));
                         }}
                         style={{
                             width: '100%',

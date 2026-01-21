@@ -15,7 +15,7 @@ export function ReadingProvider({ children }) {
         sepia: 0, // 0-100
         blueLight: 0, // 0-100 (opacity of orange overlay)
         theme: 'dark', // 'light', 'night', 'paper'
-        fontSize: 18,
+        pageZoom: 100, // 50-150 (percentage)
         lineHeight: 1.6,
     });
 
