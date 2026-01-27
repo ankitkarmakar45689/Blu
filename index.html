@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just2Read - Your Personal AI Audiobook</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar/Settings -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <h1>Just2Read</h1>
+            </div>
+            
+            <div class="settings-group">
+                <h3>Eye Protection</h3>
+                <div class="control-item">
+                    <span>Dark Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="darkMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <span>Blue Light Filter</span>
+                    <label class="switch">
+                        <input type="checkbox" id="blueLight">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <span>Warm Mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="warmMode">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3>Text Appearance</h3>
+                <div class="control-item-vertical">
+                    <label>Font Size</label>
+                    <input type="range" id="fontSize" min="14" max="32" value="18">
+                </div>
+                <div class="control-item-vertical">
+                    <label>Line Spacing</label>
+                    <input type="range" id="lineSpacing" min="1.2" max="2.5" step="0.1" value="1.6">
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3>Voice Settings</h3>
+                <div class="control-item-vertical">
+                    <label>Voice</label>
+                    <select id="voiceSelect"></select>
+                </div>
+                <div class="control-item-vertical">
+                    <label>Speed</label>
+                    <div class="speed-btns">
+                        <button class="speed-btn" data-speed="0.8">Slow</button>
+                        <button class="speed-btn active" data-speed="1">Normal</button>
+                        <button class="speed-btn" data-speed="1.5">Fast</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-area">
+            <header class="top-nav glass">
+                <div class="upload-section">
+                    <label for="fileUpload" class="upload-btn">
+                        <span>Upload PDF</span>
+                        <input type="file" id="fileUpload" accept="application/pdf" hidden>
+                    </label>
+                    <span id="fileName">No file selected</span>
+                </div>
+                <div class="player-controls">
+                    <button id="playBtn" class="control-btn" title="Play">▶</button>
+                    <button id="pauseBtn" class="control-btn" title="Pause" disabled>⏸</button>
+                    <button id="stopBtn" class="control-btn" title="Stop" disabled>⏹</button>
+                </div>
+            </header>
+
+            <div class="reader-panel glass" id="readerPanel">
+                <div id="welcomeScreen" class="welcome-screen">
+                    <div class="welcome-content">
+                        <h2>Welcome to Just2Read</h2>
+                        <p>Upload a PDF to start your immersive reading experience.</p>
+                        <div class="features-grid">
+                            <div class="feature-card">🎧 AI Text-to-Speech</div>
+                            <div class="feature-card">👀 Eye Protection</div>
+                            <div class="feature-card">✨ Clean Design</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="textContent" class="text-content hidden">
+                    <!-- Extracted text will go here -->
+                </div>
+            </div>
+
+            <footer class="progress-footer glass">
+                <div class="progress-info">
+                    <span id="readingProgress">0% read</span>
+                    <span id="pageInfo">Page: 0/0</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Overlay Filters -->
+    <div id="blueLightOverlay" class="filter-overlay blue-light"></div>
+    <div id="warmModeOverlay" class="filter-overlay warm"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
