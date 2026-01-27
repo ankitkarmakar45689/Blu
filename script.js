@@ -164,7 +164,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Speech Synthesis ---
     function startReading() {
+        console.log('Attempting to start reading...');
+
+        if (state.synth.speaking && !state.synth.paused) {
+            console.log('Already speaking...');
+            return;
+        }
+
         if (state.synth.paused) {
+            console.log('Resuming synth...');
             state.synth.resume();
             state.isReading = true;
             updateControls(true);
@@ -173,30 +181,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (state.currentWordIndex === -1) state.currentWordIndex = 0;
 
-        // Speak from the current word index
-        const textToSpeak = state.words.slice(state.currentWordIndex).join(' ');
-        state.utterance = new SpeechSynthesisUtterance(textToSpeak);
+        // Ensure we cancel any existing speech
+        state.synth.cancel();
+
+        // For better reliability, we read the text in chunks
+        state.isReading = true;
+        playNextChunk();
+    }
+
+    function playNextChunk() {
+        if (!state.isReading) return;
+
+        const remainingWords = state.words.slice(state.currentWordIndex);
+        if (remainingWords.length === 0) {
+            stopReading();
+            return;
+        }
+
+        // Take a chunk of words
+        const chunkSize = 50;
+        const chunkArr = remainingWords.slice(0, chunkSize);
+        const chunkStr = chunkArr.join(' ');
+        const utterance = new SpeechSynthesisUtterance(chunkStr);
+
+        state.utterance = utterance;
+        window._currentUtterance = utterance;
 
         const voiceIdx = elements.voiceSelect.value;
-        state.utterance.voice = state.voices[voiceIdx];
-        state.utterance.rate = state.settings.speed;
+        if (state.voices[voiceIdx]) {
+            utterance.voice = state.voices[voiceIdx];
+        }
+        utterance.rate = state.settings.speed;
 
-        state.utterance.onboundary = (event) => {
+        utterance.onstart = () => {
+            updateControls(true);
+        };
+
+        utterance.onboundary = (event) => {
             if (event.name === 'word') {
-                const charIndex = event.charIndex;
-                findAndHighlightWord(charIndex);
+                findAndHighlightWord(event.charIndex);
             }
         };
 
-        state.utterance.onend = () => {
+        utterance.onend = () => {
             if (state.isReading) {
+                state.currentWordIndex += chunkArr.length;
+                playNextChunk();
+            }
+        };
+
+        utterance.onerror = (event) => {
+            console.error('TTS Chunk Error:', event.error);
+            if (event.error !== 'interrupted') {
                 stopReading();
             }
         };
 
-        state.synth.speak(state.utterance);
-        state.isReading = true;
-        updateControls(true);
+        state.synth.speak(utterance);
     }
 
     function findAndHighlightWord(charIndex) {
